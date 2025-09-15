@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        img {
+            max-width: 100%;
+            /* Make images responsive */
+            height: auto;
+            image-rendering: pixelated;
+            /* Prevent smoothing of images */
+            display: block;
+            /* Remove extra space below image */
+            margin: 20px auto;
+            /* Center the image */
+        }
+
+        #messageInput {
+            padding: 8px;
+            width: calc(100% - 20px);
+            /* Adjust width for padding */
+            margin: 10px 0;
+            background-color: #222;
+            /* Dark background for input */
+            color: #eee;
+            /* Light text for input */
+            border: 2px solid #555;
+            /* Darker border */
+            font-family: 'Press Start 2P', monospace;
+            box-sizing: border-box;
+            /* Include padding and border in element&#39;s total width and height */
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #333;
+            /* Dark button background */
+            color: #fff;
+            border: 2px solid #555;
+            cursor: pointer;
+            font-family: &#39;
+            Press Start 2P&#39;
+            ,
+            monospace;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        #messageContainer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px dashed #555;
+            /* Dashed border for a retro look */
+            text-align: left;
+        }
+    </style>
+    <script src="/js/main.js" defer></script>
+</head>
+
+<body>
+    <img src="/images/idle.gif" alt="idle GIF">
+
+    <form id="messageForm">
+        <input type="text" id="messageInput" placeholder="say something here..." required>
+        <br>
+        <button type="submit">Send</button>
+    </form>
+
+    <div id="messageContainer">
+    </div>
+
+    <div id="status"></div>
+
+</body>
+
+</html>
