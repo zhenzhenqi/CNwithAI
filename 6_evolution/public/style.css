@@ -1,0 +1,115 @@
+body {
+    background-color: #000;
+    color: #0f0;
+    font-family: 'Press Start 2P', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow-y: scroll;
+    /* Allows for scrolling on the body */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    height: 90vh;
+    border: 2px solid #555;
+    background-color: #111;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    /* Make images responsive */
+    height: 160px;
+    image-rendering: pixelated;
+    /* Prevent smoothing of images */
+    display: block;
+    /* Remove extra space below image */
+    margin: 20px auto;
+    /* Center the image */
+}
+
+#messageInput {
+    padding: 8px;
+    width: calc(100% - 20px);
+    /* Adjust width for padding */
+    margin: 10px 0;
+    background-color: #222;
+    /* Dark background for input */
+    color: #eee;
+    /* Light text for input */
+    border: 2px solid #555;
+    /* Darker border */
+    font-family: 'Press Start 2P', monospace;
+    box-sizing: border-box;
+    /* Include padding and border in element's total width and height */
+}
+
+button {
+    padding: 8px 15px;
+    background-color: #333;
+    /* Dark button background */
+    color: #fff;
+    border: 2px solid #555;
+    cursor: pointer;
+    font-family: 'Press Start 2P', monospace;
+    margin-top: 5px;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+#messageContainer {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px dashed #555;
+    /* Dashed border for a retro look */
+    text-align: left;
+    overflow-y: auto;
+    /* Add scrollbar for chat history */
+    flex-grow: 1;
+    /* Allows message container to fill remaining space */
+}
+
+.assistant-message {
+    text-align: left;
+    background-color: #222;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.user-message {
+    text-align: right;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* --- New Status Element Styling --- */
+#status {
+    /* Spacing */
+    padding: 10px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+
+    /* Text appearance */
+    color: #ff0;
+    /* Bright yellow for visibility */
+    text-align: left;
+    font-size: 1em;
+    border: 1px dashed #444;
+    /* Subtle separation border */
+    background-color: #151515;
+    /* Slightly darker background */
+}

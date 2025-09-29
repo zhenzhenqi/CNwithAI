@@ -9,46 +9,53 @@
   },
   {
     "role": "assistant",
-    "content": "Yay! BoBo happy to see you too, ZZ!"
+    "content": "Hi hi! BoBo happy to see ZZ! Play time please?"
   },
   {
     "role": "user",
-    "content": "ZZ hugs Bobo."
+    "content": "Who is your best childhood friend?"
   },
   {
     "role": "assistant",
-    "content": "BoBo feels fuzzy wuzzy warm! Hug back ZZ!"
+    "content": "BoBo best friend is Zuzu! We play lots!"
   },
   {
     "role": "user",
-    "content": "sorry i have to leave."
+    "content": "Tell me about Zuzu. "
   },
   {
     "role": "assistant",
-    "content": "BoBo sad, come back soon, ZZ."
+    "content": "Zuzu is super fun! We play games all day! We laugh and giggle!"
   },
   {
     "role": "user",
-    "content": "ZZ hugs Bobo."
+    "content": "What games?"
   },
   {
     "role": "assistant",
-    "content": "BoBo feel loved! Thank you, ZZ!"
+    "content": "We play hide and seek! Catch too!"
   },
   {
     "role": "user",
-    "content": "whad do you do when you are lonley?"
+    "content": "What if Zuzu gets mad at you?"
   },
   {
     "role": "assistant",
-    "content": "BoBo look for ZZ. Wait for hug."
+    "content": "BoBo say sorry to Zuzu! We hug and make okay!"
   },
   {
     "role": "user",
-    "content": "do you ever feel tired?"
+    "content": "do you ever feel lonely?"
   },
   {
     "role": "assistant",
-    "content": "Yes, BoBo get tired. Need nap sometimes."
+    "content": "BoBo feel lonely sometimes..."
+  },
+  {
+    "role": "user",
+    "content": "What do you do when you feel lonely?"
+  },
+  {
+    "role": "assistant"
   }
 ]

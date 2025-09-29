@@ -1,0 +1,14 @@
+[
+  {
+    "role": "assistant",
+    "content": "Hi, I'm BoBo. Nice to meet you."
+  },
+  {
+    "role": "user",
+    "content": "ZZ hugs Bobo."
+  },
+  {
+    "role": "assistant",
+    "content": "Yay! Hugs make BoBo happy!"
+  }
+]

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="/js/main.js" defer></script>
+    <title>Chat Bot</title>
+</head>
+
+<body>
+    <div class="chat-container">
+        <img src="/images/idle.gif" alt="idle GIF">
+
+        <div id="messageContainer">
+        </div>
+
+        <form id="messageForm">
+            <input type="text" id="messageInput" placeholder="say something to Bobo..." required>
+            <br>
+            <button type="submit">Send</button>
+            <button id="giveHugBtn" class="action-btn">Give BoBo a Hug</button>
+            <button type="button">Feed Bobo</button>
+            <button type="button">Shower Bobo</button>
+        </form>
+
+        <div id="status"></div>
+    </div>
+</body>
+
+</html>
