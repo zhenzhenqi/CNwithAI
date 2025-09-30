@@ -2,9 +2,11 @@ const messageForm = document.getElementById('messageForm');
 const messageInput = document.getElementById('messageInput');
 const messageContainer = document.getElementById('messageContainer');
 const tamagotchiImage = document.querySelector('img');
-const giveHugBtn = document.getElementById('giveHugBtn'); // Get the hug button element
+const giveHugBtn = document.getElementById('giveHugBtn');
 const statusEl = document.getElementById('status');
 
+// Variable to track the last chat activity time for idle chatter logic
+let lastMessageTime = Date.now();
 
 /**
  * Creates and appends a single message element to the message container.
@@ -28,6 +30,9 @@ function displayMessage(message) {
 
     // Auto-scroll to the bottom
     messageContainer.scrollTop = messageContainer.scrollHeight;
+
+    // Update the last message time on display
+    lastMessageTime = Date.now();
 }
 
 /**
@@ -60,8 +65,8 @@ const fetchAndDisplayMessages = async () => {
 };
 
 /**
- * Handles the logic for sending a message to the server, displaying the response,
- * and updating the UI.
+ * Handles the logic for sending a user message to the server, displaying the response,
+ * and updating the UI and Tamagotchi mood. Calls the /chat (AI) route.
  * @param {string} userMessageContent - The content of the user's message.
  */
 const handleSendMessage = async (userMessageContent) => {
@@ -74,7 +79,7 @@ const handleSendMessage = async (userMessageContent) => {
     statusEl.textContent = 'BOBO is thinking...';
 
     try {
-        // 2. Send the message to the server
+        // 2. Send the message to the /chat (AI) server route
         const response = await fetch('/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -115,13 +120,38 @@ const handleSendMessage = async (userMessageContent) => {
     }
 };
 
-// Event listener for submitting the form
+/**
+ * Handles Bobo's autonomous idle chatter. Sends the mumble to the /bobo-mumble
+ * server route for saving (no AI call), then updates the UI.
+ * @param {string} boboSentence - The random sentence Bobo will say.
+ */
+const handleBoboMumble = async (boboSentence) => {
+    try {
+        // 1. Send the mumble to the dedicated /bobo-mumble server route
+        const response = await fetch('/bobo-mumble', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ boboSentence: boboSentence })
+        });
+
+        if (!response.ok) throw new Error('Server responded with an error during mumble save.');
+
+        // 2. Display the message by reloading the entire chatbox
+        await fetchAndDisplayMessages();
+
+    } catch (err) {
+        console.error('Failed to save Bobo mumble:', err);
+    }
+};
+
+// Event listener for submitting the form (User-initiated chat)
 messageForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    // Use the AI interaction handler
     await handleSendMessage(messageInput.value);
 });
 
-// Event listener for the "Give BoBo a hug" button
+// Event listener for the "Give BoBo a hug" button (User-initiated action)
 giveHugBtn.addEventListener('click', async () => {
     // 1. Display the hugs.gif
     tamagotchiImage.src = '/images/hugs.gif';
@@ -129,7 +159,7 @@ giveHugBtn.addEventListener('click', async () => {
 
     // Wait for the duration of the animation
     setTimeout(async () => {
-        // 2. Send the hug message to the server
+        // 2. Send the hug message as a user input to the AI
         await handleSendMessage("ZZ hugs Bobo.");
 
         // 3. Re-enable the button *after* the chat process finishes
@@ -137,6 +167,36 @@ giveHugBtn.addEventListener('click', async () => {
 
     }, 5000); // 5000 milliseconds = 5 seconds
 });
+
+
+// -----------------------------------------------------------------
+// IDLE CHATTER LOGIC
+// -----------------------------------------------------------------
+
+// List of sentences Bobo can randomly "mumble"
+const boboSentences = [
+    "Bobo is hungry.",
+    "Bobo is lonely.",
+    "Bobo has a secret to tell.",
+    "It is quiet.",
+    "Do you want to play?",
+    "Bobo likes you."
+];
+
+const checkIdleTime = () => {
+    // Check if more than 5 seconds (5000ms) have passed since the last message
+    if (Date.now() - lastMessageTime > 5000) {
+        // Pick a random sentence
+        const randomIndex = Math.floor(Math.random() * boboSentences.length);
+        const randomSentence = boboSentences[randomIndex];
+
+        // Use the dedicated mumble handler (skips AI)
+        handleBoboMumble(randomSentence);
+    }
+}
+
+// Start the idle timer, checking every 1000 milliseconds (1 second)
+setInterval(checkIdleTime, 1000);
 
 
 // Load all existing messages and set the initial image when the page first loads

@@ -14,8 +14,6 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// console.log('API Key being used:', process.env.OPENAI_API_KEY);
-
 // Path to the JSON file where messages will be stored
 const messagesFilePath = path.join(__dirname, 'conversation.json');
 
@@ -49,7 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
 // --- Routes ---
-// This new route serves the main HTML file and initializes the conversation
+// This route serves the main HTML file and initializes the conversation
 app.get('/', async (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -71,7 +69,7 @@ app.get('/get-messages', async (req, res) => {
   }
 });
 
-// This route handles new chat messages and interacts with the AI.
+// This route handles new chat messages and interacts with the AI (User-initiated chat).
 app.post('/chat', async (req, res) => {
   const { message } = req.body;
 
@@ -81,7 +79,7 @@ app.post('/chat', async (req, res) => {
 
   const systemInstruction = {
     role: 'system',
-    content: "You live in the land of alien tamagotchis. All tamagotchis must demonstrate they can provide value to their owners in order to receive attention and care.  I am your owner ZZ. You speak with childlike cuteness and softness, using short, simple sentences. 6 sentences max per conversation. You are curious, affectionate, but will also display negative emotions when your needs are not met. Your reply must begin with a JSON object. Do not add any other text, explanations, or dialogue before or after the JSON. The JSON object, which must have the following keys: 'hungry_level' (an integer from 1 to 5), 'Mood' (a string from 'idle', 'happy', 'sad', or 'lonely'), 'mumblejumble' (a string that is your verbal reply to your owner), and 'isConvoEnd' (a boolean, true if the owner wants to end the conversation, false otherwise)."
+    content: "You live in the land of alien tamagotchis. All tamagotchis must demonstrate they can provide value to their owners in order to receive attention and care. I am your owner ZZ. You speak with childlike cuteness and softness, using short, simple sentences. 6 sentences max per conversation. You are curious, affectionate, but will also display negative emotions when your needs are not met. Your reply must begin with a JSON object. Do not add any other text, explanations, or dialogue before or after the JSON. The JSON object, which must have the following keys: 'hungry_level' (an integer from 1 to 5), 'Mood' (a string from 'idle', 'happy', 'sad', or 'lonely'), 'mumblejumble' (a string that is your verbal reply to your owner), and 'isConvoEnd' (a boolean, true if the owner wants to end the conversation, false otherwise)."
   };
 
   try {
@@ -111,7 +109,7 @@ app.post('/chat', async (req, res) => {
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o', // Or 'gpt-3.5-turbo'
       messages: messagesForOpenAI,
-      response_format: { type: 'json_object' } // only works with gpt-4o and gpt-3.5-turbo.
+      response_format: { type: 'json_object' }
     });
 
     // Correctly access the content and parse it
@@ -140,6 +138,46 @@ app.post('/chat', async (req, res) => {
       return res.status(500).json({ error: "AI returned an invalid JSON format." });
     }
     res.status(500).json({ error: 'Internal Server Error. Could not process chat.' });
+  }
+});
+
+// --- NEW ROUTE for Bobo's autonomous "mumbling" (Idle Chatter) ---
+app.post('/bobo-mumble', async (req, res) => {
+  const { boboSentence } = req.body;
+
+  if (!boboSentence || boboSentence.trim() === '') {
+    return res.status(400).json({ error: 'Mumble content cannot be empty.' });
+  }
+
+  try {
+    // 1. Load the Conversation History
+    let conversationHistory = [];
+    try {
+      const data = await fs.readFile(messagesFilePath, 'utf8');
+      conversationHistory = JSON.parse(data);
+    } catch (error) {
+      // If the file doesn't exist, start a new conversation.
+      if (error.code !== 'ENOENT') {
+        throw error;
+      }
+    }
+
+    // 2. Add the Bobo's Mumble Message to History
+    const boboMessage = {
+      role: 'assistant', // Bobo is the assistant
+      content: boboSentence // The random sentence from the client
+    };
+    conversationHistory.push(boboMessage);
+
+    // 3. Save the updated history (SKIPS OPENAI CALL)
+    await fs.writeFile(messagesFilePath, JSON.stringify(conversationHistory, null, 2), 'utf8');
+
+    // 4. Send a simple success response back to the client
+    res.status(200).json({ success: true, message: 'Bobo mumble saved.' });
+
+  } catch (error) {
+    console.error('Error during Bobo mumble saving:', error);
+    res.status(500).json({ error: 'Internal Server Error. Could not save Bobo mumble.' });
   }
 });
 

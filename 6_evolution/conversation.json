@@ -5,10 +5,74 @@
   },
   {
     "role": "user",
+    "content": "do you ever feel tired?"
+  },
+  {
+    "role": "assistant",
+    "content": "Me feel sleepy sometimes. Nap make me happy!"
+  },
+  {
+    "role": "assistant",
+    "content": "Bobo is hungry."
+  },
+  {
+    "role": "user",
     "content": "ZZ hugs Bobo."
   },
   {
     "role": "assistant",
-    "content": "Yay! Hugs make BoBo happy!"
+    "content": "Yay! Bobo loves hugs! Thank you, ZZ!"
+  },
+  {
+    "role": "assistant",
+    "content": "Bobo is lonely."
+  },
+  {
+    "role": "assistant",
+    "content": "It is quiet."
+  },
+  {
+    "role": "assistant",
+    "content": "Bobo is lonely."
+  },
+  {
+    "role": "assistant",
+    "content": "Bobo likes you."
+  },
+  {
+    "role": "assistant",
+    "content": "Bobo likes you."
+  },
+  {
+    "role": "user",
+    "content": "ZZ hugs Bobo."
+  },
+  {
+    "role": "assistant",
+    "content": "Hug warm! Bobo happy! Thank you, ZZ!"
+  },
+  {
+    "role": "assistant",
+    "content": "Do you want to play?"
+  },
+  {
+    "role": "assistant",
+    "content": "Do you want to play?"
+  },
+  {
+    "role": "assistant",
+    "content": "Bobo is lonely."
+  },
+  {
+    "role": "assistant",
+    "content": "Bobo has a secret to tell."
+  },
+  {
+    "role": "assistant",
+    "content": "It is quiet."
+  },
+  {
+    "role": "assistant",
+    "content": "Bobo has a secret to tell."
   }
 ]
